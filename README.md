@@ -60,6 +60,13 @@ $ terraform --version
 Terraform v0.11.8
 ```
 
+Install [ansible vault](https://docs.ansible.com/ansible/2.6/installation_guide/intro_installation.html#installing-the-control-machine)
+I just used brew to install the latest version of ansible, which comes with ansible-vault.
+```bash
+$ ansible-vault --version
+ansible-vault 2.5.0
+```
+
 ### Building
 
 ```bash
@@ -85,12 +92,22 @@ make run-dev
 
 ## Deployment
 
-In progress.
+### Setup infra first time
 
-### Build artifact
+`make init-infra`
 
-`make build-production`
+### Apply infrastructure changes
+
+```bash
+$ make decrypt-secrets
+$ make plan-infra-prod
+$ make apply-infra-prod
+```
 
 ### Deploy to Production
 
-In progress.
+```bash
+$ make build-production
+$ make decrypt-secrets
+$ make deploy-prod
+```

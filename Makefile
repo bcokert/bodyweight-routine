@@ -1,6 +1,7 @@
 
 clean:
 	rm -rf ./artifact
+	rm -rf .secrets-decrypted
 
 deps:
 	go get .
@@ -38,3 +39,24 @@ build-frontend-production:
 	rm -rf ./artifact/static
 	mkdir -p ./artifact/static
 	yarn --cwd frontend webpack --env.production --config webpack.config.js --progress
+
+decrypt-secrets:
+	rm -rf .secrets-decrypted
+	mkdir .secrets-decrypted
+	ansible-vault decrypt deploy/secrets/deploy-key.pem.secret --output .secrets-decrypted/deploy-key.pem
+	ansible-vault decrypt deploy/secrets/terraform-aws-credentials.secret --output .secrets-decrypted/terraform-aws-credentials
+	(sleep 1800 && rm -rf .secrets-decrypted &)
+
+init-infra:
+	decrypt-secrets
+	terraform init deploy/terraform/
+
+plan-infra-prod:
+	mkdir -p .plans
+	terraform plan -var-file=deploy/terraform/production.tfvars -out=.plans/prodplan deploy/terraform/
+
+apply-infra-prod:
+	terraform apply .plans/prodplan
+
+deploy-prod:
+	./scripts/deploy.sh

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.2] - 2018-08-19
+
+* Created initial production infra terraform (network + security groups + single webserver)
+* Ran terraform to create production environment, and got it working over the web (including dns)
+* Can now access alpha site at fit.brandonokert.com
+* Created local deploy scripts and tasks, both for artifact and for server files
+* Created basic systemd service to keep service process up and maintainable
+* Created encrypted secrets and decryption mechanism
+* Added simple production configuration mechanism for web server (--production flag)
+
+### Notes
+
+* Does not include any sort of structured provisioning (eg installs), just basic files
+
 ## [0.0.1] - 2018-08-19
 
 ### Added

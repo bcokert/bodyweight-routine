@@ -8,4 +8,4 @@ const App = styled.div`
   background: #efefef;
 `
 
-ReactDOM.render(<App></App>, document.body)
+ReactDOM.render(<App>It worked!</App>, document.body)
