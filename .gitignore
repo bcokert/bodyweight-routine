@@ -1,0 +1,5 @@
+artifact/*
+.vscode
+
+frontend/node_modules
+
